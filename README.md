@@ -43,10 +43,10 @@ termux-setup-storage.
    $ apt install python 
    ```
    ```
-   $ git clone https://github.com/Hackertrackersj/Termux--Package
+   $ git clone https://github.com/Hackertrackersj/Termux-Package.git
    ```
    ```
-   $ cd Termux-package
+   $ cd Termux-Package
    ```
    ```
    $ ls
