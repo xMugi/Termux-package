@@ -7,7 +7,12 @@ This command for access the storage in termux
 termux-setup-storage.
 
 
-## Quick Installation 
- ```bash
+## Quick Installation termux packages
+```bash
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/xMugi/Termux-package/master/termux-package.sh)"
+```
+
+## Quick Installation Termux Metasploit
+```bash
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/xMugi/Termux-package/master/termux-metasploit.sh)"
 ```
