@@ -15,6 +15,7 @@ else
     echo "Changed to the 'metasploit' directory."
 fi
 
+rm metasploit.sh
 # Download the Metasploit script
 wget https://github.com/gushmazuko/metasploit_in_termux/raw/master/metasploit.sh
 
