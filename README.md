@@ -20,3 +20,7 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/xMugi/Termux-package/mas
 ```bash
 cd Termux-package/ && ./termux-bashsetup.sh
 ```
+
+# Addons
+- [docker-qemu-arm](https://github.com/xMugi/docker-qemu-arm) - Docker on Android via Termux and Qemu-ARM VM
+- [termux-hacking-tools](https://github.com/may215/awesome-termux-hacking) - Collection of hacking tools for Termux
