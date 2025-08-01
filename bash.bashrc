@@ -77,7 +77,6 @@ if [[ -x /usr/bin/dircolors ]]; then
 	alias ls='ls --color=auto'
     alias grep='grep --color=auto'
     alias diff='diff --color=auto'
-    alias ip='ip -color'
 fi
 
 # common commands
@@ -104,20 +103,18 @@ alias c='clear'
 alias cls='clear && ls'
 alias count='find . -type f | wc -l'
 alias fbig="find . -size +128M -type f -printf '%s %p\n'| sort -nr | head -16"
-alias randir='mkdir -p ./$(cat /dev/urandom | tr -cd 'a-z' | head -c 4)/$(cat /dev/urandom | tr -cd 'a-z' | head -c 4)/'
 
 # memory/CPU
-alias df='df -Tha --total'
 alias free='free -mt'
 alias psa='ps auxf'
 alias cputemp='sensors | grep Core'
 
 # applications shortcuts
+alias ip='termux-wifi-connectioninfo'
 alias myip='curl -s -m 5 https://ipleak.net/json/'
 alias e=$editor
 alias p='python3'
 alias w3mduck='w3m https://duckduckgo.com'
-alias ngrok='/data/data/com.termux/files/home/./ngrok'
 alias edit-bashrc=$editor' /data/data/com.termux/files/usr/etc/bash.bashrc'
 alias timenow='date +"%T"'
 alias datenow='date +"%d-%m-%Y"'
