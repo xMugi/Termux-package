@@ -2,4 +2,4 @@
 
 mv -v /data/data/com.termux/files/usr/etc/bash.bashrc /data/data/com.termux/files/usr/etc/bash.bashrc.backup
 
-cd termux-package && cp bash.bashrc /data/data/com.termux/files/usr/etc && exit
+cd Termux-package/ && cp bash.bashrc /data/data/com.termux/files/usr/etc && exit
