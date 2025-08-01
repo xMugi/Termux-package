@@ -16,3 +16,7 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/xMugi/Termux-package/mas
 ```bash
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/xMugi/Termux-package/master/termux-metasploit.sh)"
 ```
+After Quick Installation to customize your bash
+```bash
+cd Termux-package/ && ./termux-bashsetup.sh
+```
