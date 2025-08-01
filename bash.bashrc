@@ -1,4 +1,4 @@
-
+#forked from https://github.com/knightfall-cs/termux-bashrc
 # Last modified: 2025/08/01
 
 #### Global variables #################
