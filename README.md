@@ -18,7 +18,7 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/xMugi/Termux-package/mas
 ```
 ## After Quick Installation to customize your bash
 ```bash
-cd Termux-package/ && ./termux-bashsetup.sh
+cd Termux-package/ && chmod +x ./termux-bashsetup.sh && ./termux-bashsetup.sh
 ```
 
 # Addons
