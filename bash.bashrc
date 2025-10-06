@@ -21,6 +21,7 @@ export MANPAGER="less -R --use-color -Dd+g -Du+b"
 # EDITOR
 export EDITOR=$editor
 export SUDO_EDITOR=$editor
+export VISUAL=$editor
 
 # USER
 #export USER=$user_name
