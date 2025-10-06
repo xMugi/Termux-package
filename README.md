@@ -23,4 +23,5 @@ cd Termux-package/ && chmod +x ./termux-bashsetup.sh && ./termux-bashsetup.sh
 
 # Addons
 - [docker-qemu-arm](https://github.com/xMugi/docker-qemu-arm) - Docker on Android via Termux and Qemu-ARM VM
-- [termux-hacking-tools](https://github.com/may215/awesome-termux-hacking) - Collection of hacking tools for Termux
+- [termux-hacking-tools](https://github.com/xMugi/termux-hacks-collection) - Collection of hacking tools for Termux (Alternate Link)
+
