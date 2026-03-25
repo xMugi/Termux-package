@@ -165,18 +165,14 @@ n()
     fi
 }
 
-green='\e[1;32m'
-yellow='\e[1;33m'
-blue='\e[1;34m'
-cyan='\e[1;36m'
-reset='\e[0m' 
-color_T='\e[1;31m' # Red
-color_E='\e[1;32m' # Green
-color_R='\e[1;33m' # Yellow
-color_M='\e[1;34m' # Blue
-color_U='\e[1;35m' # Magenta
-color_X='\e[1;36m' # Cyan
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+PURPLE='\033[0;35m'
+CYAN='\033[0;36m
 reset='\e[0m'
+NC='\033[0m' # No Color
 
 #### Display ########################
 
@@ -235,15 +231,15 @@ x_art=(
 )
 # Loop through the 6 lines of the art and print each letter with its color
 for i in "${!t_art[@]}"; do
-    echo -e -n "${color_T}${t_art[i]}${color_E}${e_art[i]}${color_R}${r_art[i]}${color_M}${m_art[i]}${color_U}${u_art[i]}${color_X}${x_art[i]}${reset}"
+    echo -e -n "${RED}${t_art[i]}${GREEN}${e_art[i]}${YELLOW}${r_art[i]}${BLUE}${m_art[i]}${PURPLE}${u_art[i]}${CYAN}${x_art[i]}${NC}"
     echo
 done
 echo
-echo -e "${yellow}Docs:${reset}    ${cyan}https://termux.dev/docs${reset}"
+echo -e "${YELLOW}Docs:${NC}    ${CYAN}https://termux.dev/docs${NC}"
 echo
-echo -e "${green}Search:${reset}  pkg search <query>"
-echo -e "${blue}Install:${reset} pkg install <package>"
-echo -e "${cyan}Upgrade:${reset} pkg upgrade"
+echo -e "${GREEN}Search:${NNC}  pkg search <query>"
+echo -e "${BLUE}Install:${NC} pkg install <package>"
+echo -e "${CYAN}Upgrade:${NC} pkg upgrade"
 echo
 echo
 echo
