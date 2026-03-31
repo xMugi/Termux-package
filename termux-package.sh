@@ -1,7 +1,6 @@
 #!/data/data/com.termux/files/usr/bin/bash
 
 export REPO_URL=https://github.com/xMugi/Termux-package.git
-export BRANCH=main
 
 termux-setup-storage
 
@@ -11,5 +10,5 @@ pkg update && pkg upgrade -y && pkg install -y neofetch python php termux-servic
 git clone "${REPO_URL}"
 cd Termux-package
 mkdir ~/.termux/boot
-cp sshd ~/.termux/boot && chmod +x ~/.termux/boot/sshd
-cp adbport ~/.termux/boot && chmod +x ~/.termux/boot/adbport
+cp termux-services ~/.termux/boot && chmod +x ~/.termux/boot/termux-services
+cp adb ~/.termux/boot && chmod +x ~/.termux/boot/adb
