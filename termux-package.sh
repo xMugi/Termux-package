@@ -4,7 +4,7 @@ export REPO_URL=https://github.com/xMugi/Termux-package.git
 
 termux-setup-storage
 
-pkg update && pkg upgrade -y && pkg install -y neofetch python php termux-services termux-tools tmux android-tools nodejs git perl bash nano ruby build-essential ffmpeg curl openssl openssh wget clang nmap w3m coreutils fish zip figlet cowsay unzip wcalc bmon unrar proot golang termux-api dnsutils
+pkg update && pkg upgrade -y && pkg install -y tur-repo neofetch python php termux-services termux-tools tmux android-tools nodejs git perl bash nano ruby build-essential ffmpeg curl openssl openssh wget clang nmap w3m coreutils fish zip figlet cowsay unzip wcalc bmon unrar golang termux-api dnsutils rclone
 
 
 git clone "${REPO_URL}"
