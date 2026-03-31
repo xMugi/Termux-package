@@ -13,12 +13,9 @@ editor="nano"
 ## System Data Gathering
 
 # Get the local IP address
-LOCAL_IP=$(sudo ifconfig wlan0 | grep 'inet ' | awk '{print $2}')
+LOCAL_IP=$(ifconfig 2>/dev/null | grep -oP '(?<=inet )192\.\d+\.\d+\.\d+' | head -n 1)
 
-# Get the remote IP address
-ext_ip=$(curl -s -m 5 https://ipleak.net/json/ | grep '"ip"' | cut -d: -f2 | tr -d '", ')
-
-TEMP=$(sudo cat /sys/class/thermal/thermal_zone0/temp 2>/dev/null | cut -c1-2)
+TEMP=$(su -c cat /sys/class/thermal/thermal_zone0/temp 2>/dev/null | cut -c1-2)
 UPTIME=$(uptime -p | sed 's/up //')
 STORAGE=$(df -h /data | awk 'NR==2 {print $4 " / " $2}')
 
@@ -126,8 +123,20 @@ alias dnstest='while true; do dig +short google.com; sleep 2; done'
 #### Functions ########################
 #External IP
 myip() {
-    echo -e "${PURPLE}Local  IP${WHITE}: ${GREEN}$LOCAL_IP${NC}"
-    echo -e "${CYAN}Remote IP${WHITE}: ${RED}$ext_ip${NC}"
+    echo -ne "${YELLOW}Fetching Remote IP...${NC}\r"
+    local remote_ip=$(curl -s -m 5 https://ifconfig.me)
+    echo -e "${PURPLE}Local  IP${WHITE}: ${RED}$LOCAL_IP${NC}"
+    echo -e "${CYAN}Remote IP${WHITE}: ${GREEN}${remote_ip:-Timeout}${NC}"
+}
+
+#delta force daily codes
+daily-codes() {
+    curl -s -L -A "Mozilla/5.0" https://deltaforcetools.gg/ | \
+    grep -oP '(?<=card_name&quot;:&quot;)[^&]+|(?<=text-3xl font-bold">)[0-9]+' | \
+    paste -d ':' - - | \
+    head -n 5 | \
+    sed "s/^Dam/Zero Dam/" | \
+    awk -F':' -v y="$YELLOW" -v c="$CYAN" -v n="$NC" '{printf "%s%s%s: %s%s%s\n", y, $1, n, c, $2, n}'
 }
 
 # If user has entered command which invokes non-available
@@ -233,7 +242,7 @@ for i in "${!t_art[@]}"; do
 done
 
 echo -e "${MAGENTA}=====================================================${NC}"
-echo -e "  ${PURPLE}IP      ${WHITE}:${RED}   $LOCAL_IP ${MAGENTA}~ ${GREEN}$ext_ip${NC}"
+echo -e "  ${PURPLE}IP      ${WHITE}:${RED}   $LOCAL_IP ${MAGENTA}~ ${GREEN}Type 'myip' for Remote${NC}"
 echo -e "  ${PURPLE}CPU TEMP${WHITE}:   ${YELLOW}${TEMP}°C${NC}"
 echo -e "  ${PURPLE}UPTIME  ${WHITE}:   $UPTIME"
 echo -e "  ${PURPLE}STORAGE ${WHITE}:   ${GREEN}$STORAGE${NC} remaining"
