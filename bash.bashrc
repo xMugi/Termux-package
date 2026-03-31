@@ -119,6 +119,7 @@ alias untar='tar -zxvf '
 alias wget='wget -c '
 alias phttp='python -m http.server 8000'
 alias dnstest='while true; do dig +short google.com; sleep 2; done'
+alias rclone='rclone -P -v --progress-terminal-title'
 
 #### Functions ########################
 #External IP
