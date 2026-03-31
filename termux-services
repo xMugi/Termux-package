@@ -1,0 +1,6 @@
+#!/data/data/com.termux/files/usr/bin/sh
+# 1. Prevent the phone from sleeping
+termux-wake-lock
+
+# 2. Start the service manager (sshd etc)
+termux-services
