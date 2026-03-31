@@ -20,7 +20,7 @@ ext_ip=$(curl -s -m 5 https://ipleak.net/json/ | grep '"ip"' | cut -d: -f2 | tr 
 
 TEMP=$(sudo cat /sys/class/thermal/thermal_zone0/temp 2>/dev/null | cut -c1-2)
 UPTIME=$(uptime -p | sed 's/up //')
-STORAGE=$(df -h /data | awk 'NR==2 {print $4}')
+STORAGE=$(df -h /data | awk 'NR==2 {print $4 " / " $2}')
 
 #Color
 RED='\033[0;31m'
