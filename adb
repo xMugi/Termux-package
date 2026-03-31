@@ -1,6 +1,8 @@
 #!/data/data/com.termux/files/usr/bin/sh
 termux-wake-lock
+
 . $PREFIX/etc/profile
+
 su -c setprop service.adb.tcp.port 7777
 su -c stop adbd
 su -c start adbd
