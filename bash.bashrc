@@ -1,5 +1,5 @@
-#forked from https://github.com/knightfall-cs/termux-bashrc
-# Last modified: 2025/08/01
+#forked from https://github.com/xMugi/Termux-package
+# Last modified: 2026/3/31
 
 #### Global variables #################
 
