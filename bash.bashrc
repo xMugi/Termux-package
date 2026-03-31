@@ -239,7 +239,7 @@ echo -e "  ${PURPLE}UPTIME  ${WHITE}:   $UPTIME"
 echo -e "  ${PURPLE}STORAGE ${WHITE}:   ${GREEN}$STORAGE${NC} remaining"
 echo -e "${MAGENTA}=====================================================${NC}"
 echo -e "  ${PURPLE}Docs   ${WHITE} :${CYAN}   https://termux.dev/docs${NC}"
-echo -e "  ${PURPLE}Search ${WHITE} :   pkg search ${RED}<query>${NC}"
+echo -e "  ${PURPLE}Search ${WHITE} :   pkg search  ${RED}<query>${NC}"
 echo -e "  ${PURPLE}Install${WHITE} :   pkg install ${RED}<package>${NC}"
 echo
 echo
