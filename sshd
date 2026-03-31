@@ -3,4 +3,4 @@
 termux-wake-lock
 
 # 2. Start the service manager (sshd etc)
-termux-services
+sshd
