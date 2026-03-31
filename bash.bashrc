@@ -5,10 +5,33 @@
 
 # User name
 #change your user name here
-user_name=$USER
+username=$USER
 
 # Default editor
 editor="nano"
+
+## System Data Gathering
+
+# Get the local IP address
+LOCAL_IP=$(sudo ifconfig wlan0 | grep 'inet ' | awk '{print $2}')
+
+# Get the remote IP address
+ext_ip=$(curl -s -m 5 https://ipleak.net/json/ | grep '"ip"' | cut -d: -f2 | tr -d '", ')
+
+TEMP=$(sudo cat /sys/class/thermal/thermal_zone0/temp 2>/dev/null | cut -c1-2)
+UPTIME=$(uptime -p | sed 's/up //')
+STORAGE=$(df -h /data | awk 'NR==2 {print $4}')
+
+#Color
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+PURPLE='\033[1;34m'
+BLUE='\033[38;5;21m'
+MAGENTA='\033[0;35m'
+CYAN='\033[0;36m'
+WHITE='\033[1;37m'
+NC='\033[0m' # No Color
 
 #### Environment variables ############
 
@@ -21,12 +44,10 @@ export MANPAGER="less -R --use-color -Dd+g -Du+b"
 # EDITOR
 export EDITOR=$editor
 export SUDO_EDITOR=$editor
-export VISUAL=$editor
-
-# USER
-#export USER=$user_name
+export VISUAL="vim"
 
 # Path
+export PATH=$PATH:$HOME/bin
 export ETC="/data/data/com.termux/files/usr/etc"
 
 #### History settings #################
@@ -57,82 +78,64 @@ shopt -s autocd
 
 #### Prompt ###########################
 sym="㉿"
-bar_cr="34"    # Blue for the bars
-sym_cr="31"    # Red for the symbol
-name_cr="33"   # Yellow for the username
-host_cr="36"   # Cyan for the IP address (hostname)
-end_cr="32"    # Green for the prompt end
-dir_cr="31"    # Magenta for the current directory
 
-local_ip=$(termux-wifi-connectioninfo | grep "ip" | cut -d: -f2 | tr -d '", ') # Get the local IP address
-
-PS1='\[\033[0;${bar_cr}m\]┌──(\[\033[1;${name_cr}m\]${user_name}\[\033[1;${sym_cr}m\]${sym}\[\033[1;${host_cr}m\]${local_ip}\[\033[0;${bar_cr}m\])-[\[\033[1;${dir_cr}m\]\w\[\033[0;${bar_cr}m\]]
-\[\033[0;${bar_cr}m\]└─\[\033[1;${end_cr}m\]\$\[\033[0m\] '
+PS1="\[${PURPLE}\]┌──(\[${YELLOW}\]${username}\[${RED}\]${sym}\[${CYAN}\]${LOCAL_IP}\[${PURPLE}\])-[\[${MAGENTA}\]\\w\[${PURPLE}\]]
+\[${PURPLE}\]└─\[${GREEN}\]\\$\[${NC}\] "
 
 #### Aliases ##########################
 
 # enable color support of ls, grep and ip, also add handy aliases
 if [[ -x /usr/bin/dircolors ]]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-	alias ls='ls --color=auto'
+    alias ls='ls --color=auto'
     alias grep='grep --color=auto'
     alias diff='diff --color=auto'
 fi
 
 # common commands
 alias ..='cd ..'
-alias .2='cd ../..'
-alias .3='cd ../../..'
-alias .4='cd ../../../..'
-alias .5='cd ../../../../..'
-alias lm='ls | more'
 alias ll='ls -lFh'
 alias la='ls -alFh --group-directories-first'
 alias l1='ls -1F --group-directories-first'
-alias l1m='ls -1F --group-directories-first | more'
 alias lh='ls -ld .??*'
-alias lsn='ls | cat -n'
 alias mkdir='mkdir -p -v'
 alias cp='cp --preserve=all'
 alias cpv='cp --preserve=all -v'
 alias cpr='cp --preserve=all -R'
 alias cpp='rsync -ahW --info=progress2'
-alias cs='printf "\033c"'
 alias q='exit'
-alias c='clear'
-alias cls='clear && ls'
 alias count='find . -type f | wc -l'
 alias fbig="find . -size +128M -type f -printf '%s %p\n'| sort -nr | head -16"
 
 # memory/CPU
-alias free='free -mt'
+alias ram='free -mt'
 alias psa='ps auxf'
-alias cputemp='sensors | grep Core'
 
 # applications shortcuts
-alias ip='termux-wifi-connectioninfo'
-alias myip='curl -s -m 5 https://ipleak.net/json/'
+alias c='clear'
 alias e=$editor
 alias p='python3'
-alias w3mduck='w3m https://duckduckgo.com'
 alias edit-bashrc=$editor' /data/data/com.termux/files/usr/etc/bash.bashrc'
 alias timenow='date +"%T"'
 alias datenow='date +"%d-%m-%Y"'
 alias untar='tar -zxvf '
 alias wget='wget -c '
-alias genpass='openssl rand -base64 12'
 alias phttp='python -m http.server 8000'
-alias kn='python /data/data/com.termux/files/home/keynote/keynote.py' # https://github.com/knightfall-cs/keynote
 alias dnstest='while true; do dig +short google.com; sleep 2; done'
 
 #### Functions ########################
+#External IP
+myip() {
+    echo -e "${PURPLE}Local  IP${WHITE}: ${GREEN}$LOCAL_IP${NC}"
+    echo -e "${CYAN}Remote IP${WHITE}: ${RED}$ext_ip${NC}"
+}
 
 # If user has entered command which invokes non-available
 # utility, command-not-found will give a package suggestions.
 if [ -x /data/data/com.termux/files/usr/libexec/termux/command-not-found ]; then
-	command_not_found_handle() {
-		/data/data/com.termux/files/usr/libexec/termux/command-not-found "$1"
-	}
+    command_not_found_handle() {
+        /data/data/com.termux/files/usr/libexec/termux/command-not-found "$1"
+    }
 fi
 
 # nnn "cd on quit"
@@ -165,20 +168,14 @@ n()
     fi
 }
 
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[0;33m'
-BLUE='\033[0;34m'
-PURPLE='\033[0;35m'
-CYAN='\033[0;36m'
-reset='\e[0m'
-NC='\033[0m' # No Color
 
 #### Display ########################
 
 echo -e "\e[0;37m"
 clear
 echo
+
+
 # Define the ASCII art for each letter, line by line
 # The art below is from the provided icon.txt file
 t_art=(
@@ -231,15 +228,18 @@ x_art=(
 )
 # Loop through the 6 lines of the art and print each letter with its color
 for i in "${!t_art[@]}"; do
-    echo -e -n "${RED}${t_art[i]}${GREEN}${e_art[i]}${YELLOW}${r_art[i]}${BLUE}${m_art[i]}${PURPLE}${u_art[i]}${CYAN}${x_art[i]}${NC}"
+    echo -e -n "${RED}${t_art[i]}${GREEN}${e_art[i]}${YELLOW}${r_art[i]}${BLUE}${m_art[i]}${MAGENTA}${u_art[i]}${CYAN}${x_art[i]}${NC}"
     echo
 done
-echo
-echo -e "${YELLOW}Docs:${NC}    ${CYAN}https://termux.dev/docs${NC}"
-echo
-echo -e "${GREEN}Search:${NNC}  pkg search <query>"
-echo -e "${BLUE}Install:${NC} pkg install <package>"
-echo -e "${CYAN}Upgrade:${NC} pkg upgrade"
-echo
+
+echo -e "${MAGENTA}=====================================================${NC}"
+echo -e "  ${PURPLE}IP      ${WHITE}:${RED}   $LOCAL_IP ${MAGENTA}~ ${GREEN}$ext_ip${NC}"
+echo -e "  ${PURPLE}CPU TEMP${WHITE}:   ${YELLOW}${TEMP}°C${NC}"
+echo -e "  ${PURPLE}UPTIME  ${WHITE}:   $UPTIME"
+echo -e "  ${PURPLE}STORAGE ${WHITE}:   ${GREEN}$STORAGE${NC} remaining"
+echo -e "${MAGENTA}=====================================================${NC}"
+echo -e "  ${PURPLE}Docs   ${WHITE} :${CYAN}   https://termux.dev/docs${NC}"
+echo -e "  ${PURPLE}Search ${WHITE} :   pkg search ${RED}<query>${NC}"
+echo -e "  ${PURPLE}Install${WHITE} :   pkg install ${RED}<package>${NC}"
 echo
 echo
