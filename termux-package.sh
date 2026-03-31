@@ -10,5 +10,5 @@ pkg update && pkg upgrade -y && pkg install -y neofetch python php termux-servic
 git clone "${REPO_URL}"
 cd Termux-package
 mkdir ~/.termux/boot
-cp termux-services ~/.termux/boot && chmod +x ~/.termux/boot/termux-services
+cp sshd ~/.termux/boot && chmod +x ~/.termux/boot/sshd
 cp adb ~/.termux/boot && chmod +x ~/.termux/boot/adb
