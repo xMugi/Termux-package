@@ -9,7 +9,8 @@ username=$USER
 
 # Default editor
 editor="nano"
-
+export EDITOR=nano
+export VISUAL=nano
 ## System Data Gathering
 
 # Get the local IP address
@@ -41,7 +42,7 @@ export MANPAGER="less -R --use-color -Dd+g -Du+b"
 # EDITOR
 export EDITOR=$editor
 export SUDO_EDITOR=$editor
-export VISUAL="vim"
+export VISUAL="nano"
 
 # Path
 export PATH=$PATH:$HOME/bin
@@ -119,7 +120,8 @@ alias untar='tar -zxvf '
 alias wget='wget -c '
 alias phttp='python -m http.server 8000'
 alias dnstest='while true; do dig +short google.com; sleep 2; done'
-alias rclone='rclone -P -v --progress-terminal-title'
+alias rclone='rclone -P -v --progress-terminal-title '
+
 
 #### Functions ########################
 #External IP
@@ -241,15 +243,11 @@ for i in "${!t_art[@]}"; do
     echo -e -n "${RED}${t_art[i]}${GREEN}${e_art[i]}${YELLOW}${r_art[i]}${BLUE}${m_art[i]}${MAGENTA}${u_art[i]}${CYAN}${x_art[i]}${NC}"
     echo
 done
-
 echo -e "${MAGENTA}=====================================================${NC}"
-echo -e "  ${PURPLE}IP      ${WHITE}:${RED}   $LOCAL_IP ${MAGENTA}~ ${GREEN}Type 'myip' for Remote${NC}"
-echo -e "  ${PURPLE}CPU TEMP${WHITE}:   ${YELLOW}${TEMP}°C${NC}"
-echo -e "  ${PURPLE}UPTIME  ${WHITE}:   $UPTIME"
-echo -e "  ${PURPLE}STORAGE ${WHITE}:   ${GREEN}$STORAGE${NC} remaining"
+neofetch
 echo -e "${MAGENTA}=====================================================${NC}"
 echo -e "  ${PURPLE}Docs   ${WHITE} :${CYAN}   https://termux.dev/docs${NC}"
 echo -e "  ${PURPLE}Search ${WHITE} :   pkg search  ${RED}<query>${NC}"
 echo -e "  ${PURPLE}Install${WHITE} :   pkg install ${RED}<package>${NC}"
-echo
+echo -e "${MAGENTA}=====================================================${NC}"
 echo
