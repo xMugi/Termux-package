@@ -251,3 +251,4 @@ echo -e "  ${PURPLE}Search ${WHITE} :   pkg search  ${RED}<query>${NC}"
 echo -e "  ${PURPLE}Install${WHITE} :   pkg install ${RED}<package>${NC}"
 echo -e "${MAGENTA}=====================================================${NC}"
 echo
+export RCLONE_BWLIMIT=40M

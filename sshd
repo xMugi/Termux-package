@@ -1,6 +1,6 @@
 #!/data/data/com.termux/files/usr/bin/sh
-# 1. Prevent the phone from sleeping
+# Termux:Boot FALLBACK autostart (primary runs root-side via /data/adb/service.d).
+# WHY "|| true": if sshd is already listening (e.g. root script ran first) the
+# bind fails with an error — harmless, breathing is not an exit for the session.
 termux-wake-lock
-
-# 2. Start the service manager (sshd etc)
-sshd
+sshd || true
