@@ -19,11 +19,13 @@ termux-setup-storage 2>/dev/null || true
 
 echo "[2/5] packages (this can take a few minutes)"
 pkg update -y
+pkg install -y tur-repo root-repo x11-repo
+pkg update -y
 pkg upgrade -y
-pkg install -y tur-repo neofetch python php termux-services termux-tools tmux android-tools \
-    nodejs git perl bash nano ruby build-essential ffmpeg curl openssl openssh wget clang \
+pkg install -y neofetch python python-psutil termux-services termux-tools tmux android-tools \
+    nodejs-lts git perl bash nano ruby build-essential ffmpeg curl openssl openssh wget clang \
     nmap w3m coreutils fish zip figlet cowsay unzip wcalc bmon unrar golang termux-api \
-    dnsutils rclone
+    dnsutils rclone command-not-found tsu cronie 
 
 echo "[3/5] fetch repo"
 if [ -d "$REPO_DIR/.git" ]; then
