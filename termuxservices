@@ -1,0 +1,19 @@
+#!/data/data/com.termux/files/usr/bin/sh
+# termuxservices — Termux:Boot script (~/.termux/boot/, mode 0700).
+# L2 of the three-layer autostart architecture; L1 (root /data/adb/service.d) is primary.
+#
+# 1. Keep the phone awake while the Termux services are supposed to run
+termux-wake-lock
+termux-notification --ongoing --priority high --title "Termux" --content "Services running" --id 1
+
+# 2. Service manager (crond via runsv) + SSH fallback
+# WHY no "sv up sshd": sshd belongs to L1 — the root service.d script starts the
+# listener directly in the Termux uid. The runsv sshd service has a "down" file,
+# but "sv up sshd" started it anyway and it fought the L1 listener for port 8022
+# (bind loop in the sv log, measured 2026-10-18). "sshd || true" stays as fallback
+# for phones without root (if the port is already taken, sshd exits harmlessly).
+# WHY "sv up crond": runsvdir only comes up with the first login shell
+# (profile.d/start-services.sh); once it runs, runsv picks up crond's want-state.
+sv up crond
+sshd || true
+tmux new-session -d -s main 2>/dev/null

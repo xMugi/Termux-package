@@ -1,0 +1,9 @@
+#!/data/data/com.termux/files/usr/bin/bash
+# runsv finish script for the Komodo Periphery service.
+#
+# WHY it exists: runsv restarts a service immediately when the process exits. A
+# broken config (e.g. an invalid TOML that makes Periphery exit at startup) would
+# otherwise produce a tight crash loop that wastes battery and floods the log.
+# The pause also gives the network a moment to come back after a connectivity blip.
+
+sleep 5

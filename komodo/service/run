@@ -1,0 +1,14 @@
+#!/data/data/com.termux/files/usr/bin/bash
+# runsv run script (installed to $PREFIX/var/service/komodo/run by install.sh).
+#
+# WHY a wrapper: the binary is a GNU/Linux build and must be started through
+# glibc-runner's loader ("grun"). runsv starts services without a login profile, so
+# everything is addressed by absolute path. No PID handling here — runsv owns the
+# process and restarts it when it exits.
+
+PREFIX="${PREFIX:-/data/data/com.termux/files/usr}"
+HOME="${HOME:-/data/data/com.termux/files/home}"
+
+exec "$PREFIX/bin/grun" "$HOME/.local/share/komodo/bin/periphery" \
+    --config-path "$HOME/.config/komodo/periphery.config.toml" \
+    --log-level info

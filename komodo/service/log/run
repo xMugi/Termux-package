@@ -1,0 +1,12 @@
+#!/data/data/com.termux/files/usr/bin/bash
+# svlogd log service for Komodo Periphery (installed to
+# $PREFIX/var/service/komodo/log/run by komodo/install.sh).
+#
+# WHY svlogd instead of ">> file": svlogd handles rotation and retention itself
+# (default: rotate at 1 MB, keep the last 10 files in a timestamped form), so the
+# agent log can never grow without bound on a phone with limited storage.
+# WHY -t: one human-readable timestamp per line, which makes `komodo logs` useful.
+
+LOG_DIR="$HOME/.local/state/komodo/log"
+mkdir -p "$LOG_DIR"
+exec svlogd -t "$LOG_DIR"

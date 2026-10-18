@@ -17,7 +17,7 @@ fi
 
 rm metasploit.sh
 # Download the Metasploit script
-wget https://github.com/gushmazuko/metasploit_in_termux/raw/master/metasploit.sh
+curl -fLO https://github.com/gushmazuko/metasploit_in_termux/raw/master/metasploit.sh
 
 # Make the script executable
 chmod +x metasploit.sh

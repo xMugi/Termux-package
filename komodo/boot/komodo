@@ -1,0 +1,45 @@
+#!/data/data/com.termux/files/usr/bin/bash
+# Termux:Boot entry (installed as ~/.termux/boot/90-komodo by install.sh).
+#
+# WHY: Periphery runs as the Termux app user, never as root, so the Termux app has to
+# be launched after a reboot. Termux:Boot must have been opened at least once —
+# Android does not send BOOT_COMPLETED to apps that were never started.
+
+PREFIX="${PREFIX:-/data/data/com.termux/files/usr}"
+CONF="$HOME/.config/komodo/periphery.config.toml"
+SVC="$PREFIX/var/service/komodo"
+STATE="$HOME/.local/state/komodo"
+mkdir -p "$STATE"
+exec >>"$STATE/boot.log" 2>&1
+echo "=== $(date -u +%Y-%m-%dT%H:%M:%SZ) boot ==="
+
+# Android Doze suspends the Termux app and would drop the websocket.
+command -v termux-wake-lock >/dev/null 2>&1 && termux-wake-lock
+
+# runsvdir normally comes up with a login shell; at boot there may be none yet.
+pgrep -f runsvdir >/dev/null 2>&1 || service-daemon start >/dev/null 2>&1 || true
+
+# WHY wait for supervise: runsvdir creates the per-service supervise dir asynchronously.
+# "sv up" issued right after the daemon start fails with "runsv not running" (observed
+# on the Pixel 8, 2026-10-18). runsvdir starts every service without a "down" file on
+# its own, so a missed "sv up" is harmless — this only keeps the log meaningful.
+# Bounded, so a failed daemon start cannot delay the boot.
+i=0
+while [ $i -lt 10 ] && [ ! -d "$SVC/supervise" ]; do i=$((i + 1)); sleep 1; done
+
+# WHY wait: the network (and Tailscale's tun0) is often not up yet. Periphery retries
+# on its own, but this keeps the first attempts out of the log.
+hostport=$(sed -n 's/^[[:space:]]*core_address[[:space:]]*=[[:space:]]*"[a-z]*:\/\/\(.*\)"[[:space:]]*$/\1/p' "$CONF" | head -1)
+host="${hostport%%:*}"; port="${hostport##*:}"
+if [ -n "$host" ] && command -v nc >/dev/null 2>&1; then
+    i=0
+    while [ $i -lt 12 ]; do
+        nc -z -w 3 "$host" "$port" 2>/dev/null && break
+        i=$((i + 1)); sleep 5
+    done
+    echo "core $host:$port reached after $i tries"
+fi
+
+sv up "$SVC"
+sv status "$SVC"
+echo "=== done ==="
