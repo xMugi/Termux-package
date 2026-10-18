@@ -1,10 +1,10 @@
 #!/data/data/com.termux/files/usr/bin/bash
 # Autostart wiring — three layers, all idempotent.
 #
-#   L1  /data/adb/service.d/00-note10p-boot.sh   (PRIMARY, root boot script for
-#                                                KernelSU/Magisk service.d)
-#       → adb tcp 7777 for RustDesk, phantom-killer/freezer off, doze whitelist,
-#         Termux wake-lock + sshd via RunCommandService — all as ROOT at boot.
+#   L1  /data/adb/service.d/00-termux-boot.sh    (PRIMARY, root boot script for
+#                                                Magisk AND KernelSU service.d)
+#       → adb tcp 7777 for RustDesk, phantom-killer/freezer off (Android 12-16 keys),
+#         doze whitelist, Termux wake-lock + sshd via RunCommandService — as ROOT at boot.
 #   L2  ~/.termux/boot/{sshd,adb}                (FALLBACK via Termux:Boot app;
 #         root steps are skipped silently when su is unavailable)
 #   L3  $HOME/.termux/termux.properties          allow-external-apps = true
@@ -36,8 +36,8 @@ echo "  NOTE: Termux:Boot app must be opened once so BOOT_COMPLETED is received.
 # context; no scp needed — works standalone from the clone inside Termux.
 if su -c "true" >/dev/null 2>&1; then
     su -c "mkdir -p /data/adb/service.d"
-    if su -c "cat > /data/adb/service.d/00-note10p-boot.sh" < ./root-boot/00-note10p-boot.sh; then
-        su -c "chmod 700 /data/adb/service.d/00-note10p-boot.sh"
+    if su -c "cat > /data/adb/service.d/00-termux-boot.sh" < ./root-boot/00-termux-boot.sh; then
+        su -c "chmod 700 /data/adb/service.d/00-termux-boot.sh"
         echo "root: service.d boot script installed (reboot needed, ONCE — cached_apps_freezer)"
     else
         echo "root: ERROR while writing service.d script" >&2
