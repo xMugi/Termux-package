@@ -27,7 +27,7 @@ cd ~/Termux-package && chmod +x ./termux-bashsetup.sh && ./termux-bashsetup.sh
 
 | Layer | Path | What | Needs |
 |---|---|---|---|
-| **L1 primary** | `/data/adb/service.d/00-note10p-boot.sh` | adbd on TCP 7777 (RustDesk), phantom-killer + freezer off, Doze whitelist, Termux wake-lock + sshd via RunCommandService | root (KernelSU/Magisk) |
+| **L1 primary** | `/data/adb/service.d/00-termux-boot.sh` | adbd on TCP 7777 (RustDesk), phantom-killer + freezer off (Android 12-16 keys), Doze whitelist, Termux wake-lock + sshd via RunCommandService | root (KernelSU/Magisk) |
 | **L2 fallback** | `~/.termux/boot/{sshd,adb}` | sshd + wireless ADB when root path is absent | Termux:Boot app opened once |
 | **L3 requirement** | `~/.termux/termux.properties` | `allow-external-apps = true` — termux blocks external RunCommand intents otherwise | — |
 
@@ -68,7 +68,7 @@ The installer now keeps custom content only in `$PREFIX/etc/bash.bashrc`
 | `termux-package.sh` | One-shot entry point (curl quick-install) |
 | `termux-bashsetup.sh` | bash.bashrc + neofetch, single-load, upgrade-safe |
 | `termux-autoruns.sh` | L1-L3 wiring, idempotent |
-| `root-boot/00-note10p-boot.sh` | Root boot script (deployed to `/data/adb/service.d/`) |
+| `root-boot/00-termux-boot.sh` | Root boot script (deployed to `/data/adb/service.d/`) — device-agnostic, Android 12-16 |
 | `sshd`, `adb` | Termux:Boot fallback scripts (`~/.termux/boot/`) |
 | `bash.bashrc`, `neofetch.conf` | Shell look + fetch theme |
 | `termux-metasploit.sh` | Metasploit setup (separate) |
